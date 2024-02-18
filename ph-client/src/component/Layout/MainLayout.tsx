@@ -7,6 +7,7 @@ import {
   VideoCameraOutlined,
 } from "@ant-design/icons";
 import { NavLink, Outlet } from "react-router-dom";
+import { adminSidebarItem } from "../../Routes/adminRoutes";
 
 const MainLayout = () => {
   const items: MenuProps["items"] = [
@@ -55,7 +56,7 @@ const MainLayout = () => {
           theme="dark"
           mode="inline"
           defaultSelectedKeys={["4"]}
-          items={items}
+          items={adminSidebarItem}
         />
       </Sider>
       <Layout>
