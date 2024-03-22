@@ -45,7 +45,7 @@ export const adminPaths = [
       },
       {
         name: "Academic Department",
-        path: "Academic Department",
+        path: "academic-department",
         element: <AcademicDepartment></AcademicDepartment>,
       },
     ],
