@@ -5,19 +5,40 @@ import PHSelect from "../../../../component/form/PHSelect";
 import { academicOptions, monthOptions, yearOptions } from "./AcademinOptions";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { academicSemesterSchema } from "./AcademinSemsterSchema";
+import { useAddAcademicSemesterMutation } from "../../../../redux/feature/admin/AcademicSemester/academicSemesterApi";
+import { toast } from "sonner";
+import { TResponse } from "../../../../types/globalTypes";
 
 const CreateAcademicSemester = () => {
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    console.log(data);
+  const [addAcademicSemester] = useAddAcademicSemesterMutation();
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+    // console.log(data);
+    const toastId = toast.loading("creating ...");
     const name = academicOptions[Number(data?.name) - 1].label;
     const formData = {
       name,
       code: data.name,
       year: data.year,
-      startDate: data.startDate,
-      endDate: data.endDate,
+      startMonth: data.startMonth,
+      endMonth: data.endMonth,
     };
-    console.log(formData);
+
+    try {
+      const res = (await addAcademicSemester(formData)) as TResponse;
+      console.log(res);
+      if (res?.error) {
+        toast.error(res?.error?.data?.message);
+      } else {
+        toast.success(res?.data?.message);
+      }
+      // console.log(res);
+      // if (res.success) {
+      //   toast.success(res.message, { id: toastId });
+      // }
+    } catch (error) {
+      // console.log(error);
+      toast.error("something went wrong", { id: toastId });
+    }
   };
 
   return (
@@ -38,13 +59,13 @@ const CreateAcademicSemester = () => {
             options={yearOptions}
           ></PHSelect>
           <PHSelect
-            name={"startDate"}
-            label={"Start Date"}
+            name={"startMonth"}
+            label={"Start Month"}
             options={monthOptions}
           ></PHSelect>
           <PHSelect
-            name={"endDate"}
-            label={"End Date"}
+            name={"endMonth"}
+            label={"End Month"}
             options={monthOptions}
           ></PHSelect>
           <Button htmlType="submit">Submit</Button>
