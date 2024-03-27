@@ -82,9 +82,9 @@ const AcademicSemester = () => {
   ];
 
   const onChange: TableProps<TTablData>["onChange"] = (
-    pagination,
+    _pagination,
     filters,
-    sorter,
+    _sorter,
     extra
   ) => {
     if (extra.action === "filter") {
@@ -103,7 +103,7 @@ const AcademicSemester = () => {
     }
   };
   if (isLoading) {
-    return <p>loading</p>;
+    return <p style={{textAlign: "center" , fontSize: "24px"}}>loading...</p>;
   }
   return (
     <Table
