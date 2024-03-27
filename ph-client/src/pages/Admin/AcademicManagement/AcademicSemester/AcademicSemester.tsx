@@ -16,8 +16,8 @@ const AcademicSemester = () => {
     isLoading,
   } = useGetAllAcademicSemesterQuery(params);
   const data = semesterData?.data?.map(
-    ({ key: _id, name, startMonth, endMonth, year }) => ({
-      _id,
+    ({ _id, name, startMonth, endMonth, year }) => ({
+      key: _id,
       name,
       startMonth,
       endMonth,
@@ -103,7 +103,7 @@ const AcademicSemester = () => {
     }
   };
   if (isLoading) {
-    return <p style={{textAlign: "center" , fontSize: "24px"}}>loading...</p>;
+    return <p style={{ textAlign: "center", fontSize: "24px" }}>loading...</p>;
   }
   return (
     <Table
