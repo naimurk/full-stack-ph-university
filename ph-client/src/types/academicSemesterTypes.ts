@@ -7,4 +7,5 @@ export type TAcademicSemester = {
     updatedAt: string
     year: string
     _id: string
+    key?: string
   }
