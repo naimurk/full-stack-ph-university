@@ -2,7 +2,7 @@ import { Button, Table, TableColumnsType, TableProps } from "antd";
 import { useGetAllAcademicDepartmentApiQuery } from "../../../../redux/feature/admin/academicDepartment/academincDepartmentApi";
 import { TAcademicDepartment } from "../../../../types/academicDepartmentTypes";
 
-type TTablData = Pick<TAcademicDepartment, "_id" | "academicFaculty" | "name">;
+type TTablData = Pick<TAcademicDepartment, "academicFaculty" | "name">;
 
 const AcademicDepartment = () => {
   const {
