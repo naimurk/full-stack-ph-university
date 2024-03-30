@@ -17,10 +17,11 @@ const PHinput = ({
       {/* <input type={type} id={name} {...register(name)} /> */}
       <Controller
         name={name}
-        render={({ field }) => (
+        render={({ field, fieldState: { error } }) => (
           // <Input {...field} type={type} placeholder="Basic usage" />
           <Form.Item label={label}>
             <Input {...field} type={type} placeholder="Basic usage" />
+            {error && <p style={{color: "red"}}>{error?.message}</p>}
           </Form.Item>
         )}
       />
