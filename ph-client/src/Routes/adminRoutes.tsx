@@ -51,6 +51,7 @@ export const adminPaths = [
     
     ],
   },
+ 
   {
     name: "User Management",
     children: [
