@@ -1,4 +1,4 @@
-import { FieldValues, useForm } from "react-hook-form";
+import { FieldValues } from "react-hook-form";
 import { useLoginMutation } from "../../redux/feature/auth/authApi";
 import { decodeToken } from "../../utils/decodeToken";
 import { useAppDispatch } from "../../redux/hook";
@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import PHForm from "../../component/form/PHForm";
 import PHinput from "../../component/form/PHinput";
-import { Button, Col, Row } from "antd";
+import { Button, Row } from "antd";
 
 const Login = () => {
   const dispatch = useAppDispatch();
@@ -48,10 +48,10 @@ const Login = () => {
       <Row justify={"center"} style={{ marginTop: "15px" }} align={"middle"}>
         <PHForm defaultValues={defaultValues} onSubmit={onSubmit}>
           <div>
-            <PHinput name={"id"} type={"text"}></PHinput>
+            <PHinput label="" name={"id"} type={"text"}></PHinput>
           </div>
           <div>
-            <PHinput name={"password"} type={"password"}></PHinput>
+            <PHinput label="" name={"password"} type={"password"}></PHinput>
           </div>
           {/* <button type="submit">Login</button> */}
           <Button htmlType="submit" type="primary">
