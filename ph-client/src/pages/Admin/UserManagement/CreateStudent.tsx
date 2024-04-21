@@ -1,7 +1,15 @@
-import { FieldValues, SubmitHandler } from "react-hook-form";
+import { Controller, FieldValues, SubmitHandler } from "react-hook-form";
 import PHForm from "../../../component/form/PHForm";
 import PHinput from "../../../component/form/PHinput";
-import { Button, Col, Divider, Row } from "antd";
+import { Button, Col, Divider, Form, Input, Row } from "antd";
+import { useGetAllAcademicDepartmentApiQuery } from "../../../redux/feature/admin/academicDepartment/academincDepartmentApi";
+import { useGetAllAcademicSemesterQuery } from "../../../redux/feature/admin/AcademicSemester/academicSemesterApi";
+import { bloodOptions, genderOptions } from "../../../options/Options";
+import PHSelect from "../../../component/form/PHSelect";
+import PHDatePicker from "../../../component/form/PHDatePicker";
+import { TOptions } from "../../../types/optionsTypes";
+import { json } from "react-router-dom";
+import { useAddStudentMutation } from "../../../redux/feature/admin/userManament/userManagementApi";
 
 const studentData = {
   password: "student123",
@@ -39,17 +47,72 @@ const studentData = {
   },
 };
 
+const studentDefaultValues = {
+  name: {
+    firstName: "I am ",
+    middleName: "Student",
+    lastName: "Number 1",
+  },
+  gender: "male",
+  dateOfBirth: "1990-01-01",
+
+  email: "studffsent9ff92@gmail.com",
+  contactNo: "1235678",
+  emergencyContactNo: "987-654-3210",
+  bloogGroup: "A+",
+  presentAddress: "123 Main St, Cityville",
+  permanentAddress: "456 Oak St, Townsville",
+  guardian: {
+    fatherName: "James Doe",
+    fatherOccupation: "Engineer",
+    fatherContactNo: "111-222-3333",
+    motherName: "Mary Doe",
+    motherOccupation: "Teacher",
+    motherContactNo: "444-555-6666",
+  },
+  localGuardian: {
+    name: "Alice Johnson",
+    occupation: "Doctor",
+    contactNo: "777-888-9999",
+    address: "789 Pine St, Villageton",
+  },
+  // admissionSemester: "6603e75f01476003defc1c44",
+  // academicDepartment: "6607b6163f46619212f466b4",
+};
+
 const CreateStudent = () => {
+  const [createStudent, { data: insertedData, error }] =
+    useAddStudentMutation();
+
+  console.log(insertedData);
+  console.log(error);
+  const { data: dData, isLoading: DIsloading } =
+    useGetAllAcademicDepartmentApiQuery(undefined);
+  const { data: sData, isLoading: sIsloading } =
+    useGetAllAcademicSemesterQuery(undefined);
+  const semesterOptions = sData?.data?.map((item) => ({
+    label: `${item?.name}(${item?.year})`,
+    value: item?._id,
+  }));
+  const departmentOptions = dData?.data?.map((item) => ({
+    label: `${item?.name}`,
+    value: item?._id,
+  }));
   const onsubmit: SubmitHandler<FieldValues> = (data) => {
-    // const formData = new FormData();
-    // formData.append("something", "hello");
-    // console.log(Object.fromEntries(formData));
-    console.log(data);
+    const studentData = {
+      password: "student123",
+      student: data,
+    };
+    // console.log(data)
+    const formData = new FormData();
+    formData.append("data", JSON.stringify(studentData));
+    formData.append("file" , data.image)
+    createStudent(formData);
   };
   return (
     <Row>
       <Col span={24}>
-        <PHForm onSubmit={onsubmit}>
+        <PHForm defaultValues={studentDefaultValues} onSubmit={onsubmit}>
           <Divider>Personal info.</Divider>
           <Row gutter={8}>
             <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
@@ -74,21 +137,42 @@ const CreateStudent = () => {
               ></PHinput>
             </Col>
             <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
-              <PHinput
-                label="Date of Birth"
+              <PHDatePicker
                 name="dateOfBirth"
-                type="text"
-              ></PHinput>
+                label="Date of Birth"
+              ></PHDatePicker>
             </Col>
             <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
-              <PHinput label="Gender" name="gender" type="text"></PHinput>
+              <PHSelect
+                name={"gender"}
+                label={"Gender"}
+                options={genderOptions}
+              ></PHSelect>
             </Col>
             <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
-              <PHinput
-                label="Blood Group"
-                name="bloogGroup"
+              <PHSelect
+                name={"bloogGroup"}
+                label={"Blood Group"}
+                options={bloodOptions}
+              ></PHSelect>
+            </Col>
+            <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
+              {/* <PHinput
+                label="First Name"
+                name="name.firstName"
                 type="text"
-              ></PHinput>
+              ></PHinput> */}
+              <Controller
+                name={"image"}
+                render={({ field: { onChange , value , ...field  }, fieldState: { error } }) => (
+                  // <Input {...field} type={type} placeholder="Basic usage" />
+                  <Form.Item label={"Picture"}>
+                    
+                    <Input value={value?.fileName} {...field}  type="file" onChange={(e)=> onChange(e.target.files![0])}></Input>
+                    {error && <p style={{ color: "red" }}>{error?.message}</p>}
+                  </Form.Item>
+                )}
+              />
             </Col>
           </Row>
           <Divider>Contact info.</Divider>
@@ -202,6 +286,25 @@ const CreateStudent = () => {
                 name="localGuardian.address"
                 type="text"
               ></PHinput>
+            </Col>
+          </Row>
+          <Divider>Academic Info.</Divider>
+          <Row gutter={8}>
+            <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
+              <PHSelect
+                name={"admissionSemester"}
+                label={"Academic semester"}
+                options={semesterOptions}
+                disabled={sIsloading}
+              ></PHSelect>
+            </Col>
+            <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
+              <PHSelect
+                name={"academicDepartment"}
+                label={"Academic department"}
+                options={departmentOptions}
+                disabled={DIsloading}
+              ></PHSelect>
             </Col>
           </Row>
 
