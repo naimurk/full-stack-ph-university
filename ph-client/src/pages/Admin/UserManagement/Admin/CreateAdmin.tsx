@@ -2,21 +2,20 @@ import { Controller, FieldValues, SubmitHandler } from "react-hook-form";
 import PHForm from "../../../../component/form/PHForm";
 import PHinput from "../../../../component/form/PHinput";
 import { Button, Col, Divider, Form, Input, Row } from "antd";
-import { useGetAllAcademicDepartmentApiQuery } from "../../../../redux/feature/admin/academicDepartment/academincDepartmentApi";
 import { bloodOptions, genderOptions } from "../../../../options/Options";
 import PHSelect from "../../../../component/form/PHSelect";
 import PHDatePicker from "../../../../component/form/PHDatePicker";
-import { useAddFacultyMutation } from "../../../../redux/feature/admin/userManament/userManagementApi";
+import { useAddAdminMutation } from "../../../../redux/feature/admin/userManament/userManagementApi";
 
-const facultyValues = {
-  designation: "Lecturer",
+const adminValues = {
+  designation: "Admin",
   name: {
     firstName: "Mridul",
     middleName: "Das",
     lastName: "Rahman",
   },
   gender: "male",
-  email: "faculty3@gmail.com",
+  email: "admin3@gmail.com",
   dateOfBirth: "1990-01-01",
   contactNo: "123",
   emergencyContactNo: "123",
@@ -26,34 +25,27 @@ const facultyValues = {
   // academicDepartment: "65b00fb010b74fcbd7a25d8e",
 };
 
-const CreateFaculty = () => {
-  const [createFaculty, { data: insertedData, error }] =
-    useAddFacultyMutation();
+const CreateAdmin = () => {
+  const [createAdmin, { data: insertedData, error }] = useAddAdminMutation();
 
   console.log(insertedData);
   console.log(error);
-  const { data: dData, isLoading: DIsloading } =
-    useGetAllAcademicDepartmentApiQuery(undefined);
 
-  const departmentOptions = dData?.data?.map((item) => ({
-    label: `${item?.name}`,
-    value: item?._id,
-  }));
   const onsubmit: SubmitHandler<FieldValues> = (data) => {
     const facultyData = {
-      password: "student123",
-      faculty: data,
+      password: "admin123",
+      admin: data,
     };
     // console.log(data)
     const formData = new FormData();
     formData.append("data", JSON.stringify(facultyData));
     formData.append("file", data.image);
-    createFaculty(formData);
+    createAdmin(formData);
   };
   return (
     <Row>
       <Col span={24}>
-        <PHForm defaultValues={facultyValues} onSubmit={onsubmit}>
+        <PHForm defaultValues={adminValues} onSubmit={onsubmit}>
           <Divider>Personal info.</Divider>
           <Row gutter={8}>
             <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
@@ -160,18 +152,6 @@ const CreateFaculty = () => {
             </Col>
           </Row>
 
-          <Divider>Academic Info.</Divider>
-          <Row gutter={8}>
-            <Col span={24} md={{ span: 12 }} lg={{ span: 8 }}>
-              <PHSelect
-                name={"academicDepartment"}
-                label={"Academic department"}
-                options={departmentOptions}
-                disabled={DIsloading}
-              ></PHSelect>
-            </Col>
-          </Row>
-
           <Button htmlType="submit">Submit</Button>
         </PHForm>
       </Col>
@@ -179,4 +159,4 @@ const CreateFaculty = () => {
   );
 };
 
-export default CreateFaculty;
+export default CreateAdmin;
