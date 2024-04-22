@@ -1,10 +1,6 @@
-
 const UpdateStudent = () => {
-    return (
-        <div>
-            
-        </div>
-    );
+  // todo
+  return <div></div>;
 };
 
 export default UpdateStudent;
