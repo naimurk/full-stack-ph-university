@@ -4,7 +4,11 @@ import { TStudent } from "../../../../types";
 import { useState } from "react";
 import { TQueryParams } from "../../../../types/queryParams.type";
 import { useGetAllStudentQuery } from "../../../../redux/feature/admin/userManament/userManagementApi";
-export type TTablData = Pick<TStudent, "id" | "fullName">;
+import { Link } from "react-router-dom";
+export type TTablData = Pick<
+  TStudent,
+  "id" | "fullName" | "email" | "contactNo"
+>;
 const StudentData = () => {
   const [params, setParams] = useState<TQueryParams[]>([]);
   const [page, setpage] = useState(1);
@@ -18,11 +22,15 @@ const StudentData = () => {
     { name: "sort", value: "id" },
     ...params,
   ]);
-  const data = semesterData?.data?.map(({ _id, fullName, id }) => ({
-    key: _id,
-    fullName,
-    id,
-  }));
+  const data = semesterData?.data?.map(
+    ({ _id, fullName, id, email, contactNo }) => ({
+      key: _id,
+      fullName,
+      id,
+      email,
+      contactNo,
+    })
+  );
   // console.log(params);
 
   const columns: TableColumnsType<TTablData> = [
@@ -36,15 +44,30 @@ const StudentData = () => {
       key: "id",
       dataIndex: "id",
     },
+    {
+      title: "Email",
+      key: "id",
+      dataIndex: "email",
+    },
+    {
+      title: "Contact",
+      key: "id",
+      dataIndex: "contactNo",
+    },
 
     {
       key: "x",
       title: "Action",
-      render: () => {
+      render: (item) => {
         return (
           <Space>
-            <Button>Details</Button>
-            <Button>Update</Button>
+            <Link to={`/admin/students/${item?.key}`}>
+              <Button>Details</Button>
+            </Link>
+            <Link to={`/admin/student-update/${item?.key}`}>
+              <Button>Update</Button>
+            </Link>
+            
             <Button>Blocked</Button>
           </Space>
         );

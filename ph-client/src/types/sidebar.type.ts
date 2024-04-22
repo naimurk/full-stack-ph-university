@@ -9,7 +9,7 @@ import { ReactNode } from "react";
     key: string;
     label: ReactNode;
     children?: TSidebarItems[];
-  };
+  } | undefined;
   
    export type TRoutesData = {
     name: string;

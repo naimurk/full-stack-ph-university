@@ -3,7 +3,7 @@ import { TRoutesData, TSidebarItems } from "../types";
 
 
 
-export const sidebarItemsGenerator = (sidebarData: TRoutesData[], role) => {
+export const sidebarItemsGenerator = (sidebarData: TRoutesData[], role : string) => {
   const adminSidebarItem = sidebarData?.reduce((acc: TSidebarItems[], item) => {
     if (item?.path && item?.name) {
       acc.push({
@@ -15,10 +15,15 @@ export const sidebarItemsGenerator = (sidebarData: TRoutesData[], role) => {
       acc.push({
         key: item?.name,
         label: item?.name,
-        children: item?.children?.map((child) => ({
-          key: child?.name,
-          label: <NavLink to={`/admin/${child?.path}`}>{child?.name}</NavLink>,
-        })),
+        children: item?.children?.map((child) => {
+          if(child?.name){
+
+            return {
+              key: child?.name,
+              label: <NavLink to={`/admin/${child?.path}`}>{child?.name}</NavLink>,
+            }
+          }
+        }),
       });
     }
     return acc;
