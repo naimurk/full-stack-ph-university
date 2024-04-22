@@ -4,7 +4,7 @@ type TPHSelector = {
   name: string;
   label: string;
   options: Array<{ value: string; label: string; disabled?: boolean }> | undefined;
-  disabled: boolean
+  disabled?: boolean
 };
 
 

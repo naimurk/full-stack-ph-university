@@ -5,7 +5,7 @@ import CreateAcademicFaculty from "../pages/Admin/AcademicManagement/AcademicFac
 import AcademicSemester from "../pages/Admin/AcademicManagement/AcademicSemester/AcademicSemester";
 import CreateAcademicSemester from "../pages/Admin/AcademicManagement/AcademicSemester/CreateAcademicSemester";
 import AdminDashboard from "../pages/Admin/AdminDashboard";
-import CreateAdmin from "../pages/Admin/UserManagement/CreateAdmin";
+import CreateAdmin from "../pages/Admin/UserManagement/Admin/CreateAdmin";
 import CreateFaculty from "../pages/Admin/UserManagement/Faculty/CreateFaculty";
 import CreateStudent from "../pages/Admin/UserManagement/student/CreateStudent";
 import StudentData from "../pages/Admin/UserManagement/student/StudentData";
