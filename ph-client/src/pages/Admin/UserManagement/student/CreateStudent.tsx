@@ -1,15 +1,15 @@
 import { Controller, FieldValues, SubmitHandler } from "react-hook-form";
-import PHForm from "../../../component/form/PHForm";
-import PHinput from "../../../component/form/PHinput";
+import PHForm from "../../../../component/form/PHForm";
+import PHinput from "../../../../component/form/PHinput";
 import { Button, Col, Divider, Form, Input, Row } from "antd";
-import { useGetAllAcademicDepartmentApiQuery } from "../../../redux/feature/admin/academicDepartment/academincDepartmentApi";
-import { useGetAllAcademicSemesterQuery } from "../../../redux/feature/admin/AcademicSemester/academicSemesterApi";
-import { bloodOptions, genderOptions } from "../../../options/Options";
-import PHSelect from "../../../component/form/PHSelect";
-import PHDatePicker from "../../../component/form/PHDatePicker";
-import { TOptions } from "../../../types/optionsTypes";
+import { useGetAllAcademicDepartmentApiQuery } from "../../../../redux/feature/admin/academicDepartment/academincDepartmentApi";
+import { useGetAllAcademicSemesterQuery } from "../../../../redux/feature/admin/AcademicSemester/academicSemesterApi";
+import { bloodOptions, genderOptions } from "../../../../options/Options";
+import PHSelect from "../../../../component/form/PHSelect";
+import PHDatePicker from "../../../../component/form/PHDatePicker";
+import { TOptions } from "../../../../types/optionsTypes";
 import { json } from "react-router-dom";
-import { useAddStudentMutation } from "../../../redux/feature/admin/userManament/userManagementApi";
+import { useAddStudentMutation } from "../../../../redux/feature/admin/userManament/userManagementApi";
 
 const studentData = {
   password: "student123",
