@@ -5,8 +5,14 @@ import CreateAcademicFaculty from "../pages/Admin/AcademicManagement/AcademicFac
 import AcademicSemester from "../pages/Admin/AcademicManagement/AcademicSemester/AcademicSemester";
 import CreateAcademicSemester from "../pages/Admin/AcademicManagement/AcademicSemester/CreateAcademicSemester";
 import AdminDashboard from "../pages/Admin/AdminDashboard";
+import AdminData from "../pages/Admin/UserManagement/Admin/AdminData";
+import AdminDetails from "../pages/Admin/UserManagement/Admin/AdminDetails";
+import AdminUpdate from "../pages/Admin/UserManagement/Admin/AdminUpdate";
 import CreateAdmin from "../pages/Admin/UserManagement/Admin/CreateAdmin";
 import CreateFaculty from "../pages/Admin/UserManagement/Faculty/CreateFaculty";
+import FacultyData from "../pages/Admin/UserManagement/Faculty/FacultyData";
+import FacultyDetails from "../pages/Admin/UserManagement/Faculty/FacultyDetails";
+import FacultyUpdate from "../pages/Admin/UserManagement/Faculty/FacultyUpdate";
 import CreateStudent from "../pages/Admin/UserManagement/student/CreateStudent";
 import StudentData from "../pages/Admin/UserManagement/student/StudentData";
 import StudentDetails from "../pages/Admin/UserManagement/student/StudentDetails";
@@ -81,9 +87,35 @@ export const adminPaths = [
         element: <CreateAdmin></CreateAdmin>,
       },
       {
+        name: "Admins",
+        path: "admins",
+        element: <AdminData></AdminData>,
+      },
+      {
+        path: "admin-details/:id",
+        element: <AdminDetails></AdminDetails>,
+      },
+      {
+        path: "admin-edit/:id",
+        element: <AdminUpdate></AdminUpdate>,
+      },
+      {
         name: "Create Faculty",
         path: "create-faculty",
         element: <CreateFaculty></CreateFaculty>,
+      },
+      {
+        name: "Faculties",
+        path: "faculties",
+        element: <FacultyData></FacultyData>,
+      },
+      {
+        path: "faculty-details/:id",
+        element: <FacultyDetails></FacultyDetails>,
+      },
+      {
+        path: "faculty-edit/:id",
+        element: <FacultyUpdate></FacultyUpdate>,
       },
     ],
   },

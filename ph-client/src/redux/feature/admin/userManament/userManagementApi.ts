@@ -1,4 +1,6 @@
 import { TResponseWithRedux, TStudent } from "../../../../types";
+import { TAdmin } from "../../../../types/adminTypes";
+import { TFaculty } from "../../../../types/facultyTypes";
 import { TQueryParams } from "../../../../types/queryParams.type";
 import { baseApi } from "../../../api/baseApi";
 
@@ -21,19 +23,19 @@ const userManagementApi = baseApi.injectEndpoints({
         return { data: res?.data, meta: res?.meta };
       },
     }),
-    getAllFaculty: builder.query({
+    AllFaculty: builder.query({
       query: (arg) => {
         const params = new URLSearchParams();
         arg?.forEach((element: TQueryParams) => {
           params.append(element.name, element.value as string);
         });
         return {
-          url: "/academic-faculties",
+          url: "/faculties",
           method: "GET",
           params: params,
         };
       },
-      transformResponse: (res: TResponseWithRedux<TStudent[]>) => {
+      transformResponse: (res: TResponseWithRedux<TFaculty[]>) => {
         return { data: res?.data, meta: res?.meta };
       },
     }),
@@ -49,7 +51,7 @@ const userManagementApi = baseApi.injectEndpoints({
           params: params,
         };
       },
-      transformResponse: (res: TResponseWithRedux<TStudent[]>) => {
+      transformResponse: (res: TResponseWithRedux<TAdmin[]>) => {
         return { data: res?.data, meta: res?.meta };
       },
     }),
@@ -85,5 +87,5 @@ export const {
   useAddAdminMutation,
   useAddFacultyMutation,
   useGetAllAdminQuery,
-  useGetAllFacultyQuery,
+  useAllFacultyQuery,
 } = userManagementApi;

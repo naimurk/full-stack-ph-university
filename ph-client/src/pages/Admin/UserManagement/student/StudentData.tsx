@@ -17,7 +17,7 @@ const StudentData = () => {
     isFetching,
     isLoading,
   } = useGetAllStudentQuery([
-    { name: "limit", value: "2" },
+    { name: "limit", value: "10" },
     { name: "page", value: page },
     { name: "sort", value: "id" },
     ...params,
@@ -67,7 +67,8 @@ const StudentData = () => {
             <Link to={`/admin/student-update/${item?.key}`}>
               <Button>Update</Button>
             </Link>
-            
+
+            <Button>Delete</Button>
             <Button>Blocked</Button>
           </Space>
         );
