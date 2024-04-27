@@ -4,7 +4,7 @@ import { TStudent } from "../../../../types";
 import { useState } from "react";
 import { TQueryParams } from "../../../../types/queryParams.type";
 import { Link } from "react-router-dom";
-import { useAllFacultyQuery, useGetAllAdminQuery} from "../../../../redux/feature/admin/userManament/userManagementApi";
+import {  useGetAllAdminQuery} from "../../../../redux/feature/admin/userManament/userManagementApi";
 
 export type TTablData = Pick<
   TStudent,

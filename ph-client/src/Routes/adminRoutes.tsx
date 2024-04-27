@@ -5,6 +5,12 @@ import CreateAcademicFaculty from "../pages/Admin/AcademicManagement/AcademicFac
 import AcademicSemester from "../pages/Admin/AcademicManagement/AcademicSemester/AcademicSemester";
 import CreateAcademicSemester from "../pages/Admin/AcademicManagement/AcademicSemester/CreateAcademicSemester";
 import AdminDashboard from "../pages/Admin/AdminDashboard";
+import Courses from "../pages/Admin/CourseMangement/Courses";
+import CreateCourse from "../pages/Admin/CourseMangement/CreateCourse";
+import OfferCourse from "../pages/Admin/CourseMangement/OfferCourse";
+import OfferedCourse from "../pages/Admin/CourseMangement/OfferedCourse";
+import RegistredSemister from "../pages/Admin/CourseMangement/RegistredSemister";
+import SemesterRegistration from "../pages/Admin/CourseMangement/SemesterRegistration";
 import AdminData from "../pages/Admin/UserManagement/Admin/AdminData";
 import AdminDetails from "../pages/Admin/UserManagement/Admin/AdminDetails";
 import AdminUpdate from "../pages/Admin/UserManagement/Admin/AdminUpdate";
@@ -116,6 +122,41 @@ export const adminPaths = [
       {
         path: "faculty-edit/:id",
         element: <FacultyUpdate></FacultyUpdate>,
+      },
+    ],
+  },
+  {
+    name: "Course Management",
+    children: [
+      {
+        name: "Semester Registration",
+        path: "semester-registration",
+        element: <SemesterRegistration></SemesterRegistration>,
+      },
+      {
+        name: "Registered Semester ",
+        path: "registered-semester",
+        element: <RegistredSemister></RegistredSemister>,
+      },
+      {
+        name: "Create Course",
+        path: "create-course",
+        element: <CreateCourse></CreateCourse>,
+      },
+      {
+        name: "Courses",
+        path: "courses",
+        element: <Courses></Courses>,
+      },
+      {
+        name: "Offer Course",
+        path: "offer-course",
+        element: <OfferCourse></OfferCourse>,
+      },
+      {
+        name: "Offered Courses",
+        path: "offered-course",
+        element: <OfferedCourse></OfferedCourse>,
       },
     ],
   },
