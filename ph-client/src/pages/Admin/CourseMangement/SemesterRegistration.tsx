@@ -34,6 +34,7 @@ const SemesterRegistration = () => {
     const formData = {
       //   name,
       ...data,
+    
       minCredit: Number(data.minCredit),
       maxCredit: Number(data.maxCredit),
     };
@@ -68,7 +69,7 @@ const SemesterRegistration = () => {
             options={status}
           ></PHSelect>
           <PHDatePicker name="startDate" label="Start Date"></PHDatePicker>
-          <PHDatePicker name="endDate" label="Start Date"></PHDatePicker>
+          <PHDatePicker name="endDate" label="End Date"></PHDatePicker>
           <PHinput label="Min Credit" type="text" name="minCredit"></PHinput>
 
           <PHinput label="Max Credit" type="text" name="maxCredit"></PHinput>
