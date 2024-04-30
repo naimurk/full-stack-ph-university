@@ -23,7 +23,7 @@ const AdminData = () => {
     { name: "sort", value: "id" },
     ...params,
   ]);
- console.log(adminData)
+
 
   const data = adminData?.data?.map(
     ({ _id, fullName, id, email, contactNo }) => ({
