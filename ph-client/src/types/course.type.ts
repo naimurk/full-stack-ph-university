@@ -4,11 +4,11 @@ export interface TCourse {
   prefix: string;
   code: number;
   credits: number;
-  preRequisiteCourses: PreRequisiteCourse[] | [];
+  preRequisiteCourses: TPreRequisiteCourse[] | [];
   isDeleted: boolean;
 }
 
-export interface PreRequisiteCourse {
+export interface TPreRequisiteCourse {
   course: null | string;
   isDeleted: boolean;
 }

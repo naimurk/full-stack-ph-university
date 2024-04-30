@@ -9,6 +9,7 @@ import {
 } from "../../../redux/feature/admin/courseMangement/courseManagementApi";
 import { TResponseWithRedux } from "../../../types";
 import PHSelect from "../../../component/form/PHSelect";
+import { TPreRequisiteCourse } from "../../../types/course.type";
 
 const CreateCourse = () => {
   const [createCourse, { data: insertedData }] = useAddCourseMutation();
@@ -23,10 +24,12 @@ const CreateCourse = () => {
     const formData = {
       //   name,
       ...data,
-      preRequisiteCourses: data?.preRequisiteCourses?.map((item) => ({
-        course: item,
-        isDeleted: false,
-      })),
+      preRequisiteCourses: data?.preRequisiteCourses?.map(
+        (item: TPreRequisiteCourse) => ({
+          course: item,
+          isDeleted: false,
+        })
+      ),
       code: Number(data.code),
       credits: Number(data.credits),
     };
