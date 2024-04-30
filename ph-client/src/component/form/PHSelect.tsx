@@ -3,18 +3,18 @@ import { Controller } from "react-hook-form";
 type TPHSelector = {
   name: string;
   label: string;
-  options: Array<{ value: string; label: string; disabled?: boolean }> | undefined;
-  disabled?: boolean
+  options:
+    | Array<{ value: string; label: string; disabled?: boolean }>
+    | undefined;
+  disabled?: boolean;
+  mode?: "multiple" | undefined;
 };
 
-
-const PHSelect = ({ name, label, options , disabled}: TPHSelector) => {
- 
+const PHSelect = ({ name, label, options, disabled, mode }: TPHSelector) => {
   return (
     <Controller
       name={name}
-      
-      render={({ field , fieldState: {error} }) => (
+      render={({ field, fieldState: { error } }) => (
         <Form.Item label={label}>
           <Select
             style={{ width: "100%" }}
@@ -22,8 +22,9 @@ const PHSelect = ({ name, label, options , disabled}: TPHSelector) => {
             onChange={field.onChange}
             options={options}
             disabled={disabled}
+            mode={mode === "multiple" ? "multiple" : undefined}
           />
-          {error && <small style={{color: "red"}}>{error.message}</small>}
+          {error && <small style={{ color: "red" }}>{error.message}</small>}
         </Form.Item>
       )}
     />

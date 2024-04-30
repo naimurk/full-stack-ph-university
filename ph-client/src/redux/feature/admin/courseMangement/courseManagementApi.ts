@@ -1,4 +1,5 @@
 import { TResponseWithRedux } from "../../../../types";
+import { TCourse } from "../../../../types/course.type";
 import { TQueryParams } from "../../../../types/queryParams.type";
 import { TRegisteredSemester } from "../../../../types/registeredSemesterTypes";
 import { baseApi } from "../../../api/baseApi";
@@ -22,7 +23,32 @@ const courseManagementApi = baseApi.injectEndpoints({
       },
       providesTags: ["semester-registrations"],
     }),
+    getAllCourses: builder.query({
+      query: (arg) => {
+        const params = new URLSearchParams();
+        arg?.forEach((element: TQueryParams) => {
+          params.append(element.name, element.value as string);
+        });
+        return {
+          url: "/courses",
+          method: "GET",
+          params: params,
+        };
+      },
+      transformResponse: (res: TResponseWithRedux<TCourse[]>) => {
+        return { data: res?.data, meta: res?.meta };
+      },
+      providesTags: ["course"],
+    }),
 
+    addCourse: builder.mutation({
+      query: (data) => ({
+        url: "/courses/create-course",
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["course"],
+    }),
     addSemesterRegistration: builder.mutation({
       query: (data) => ({
         url: "/semester-registrations/create-semester-registration",
@@ -45,4 +71,6 @@ export const {
   useAddSemesterRegistrationMutation,
   useGetAllRegisteredSemesterQuery,
   useUpdateSemesterRegistrationMutation,
+  useGetAllCoursesQuery,
+  useAddCourseMutation,
 } = courseManagementApi;
