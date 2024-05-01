@@ -10,6 +10,8 @@ import PHDatePicker from "../../../../component/form/PHDatePicker";
 import { TOptions } from "../../../../types/optionsTypes";
 import { json } from "react-router-dom";
 import { useAddStudentMutation } from "../../../../redux/feature/admin/userManament/userManagementApi";
+import { toast } from "sonner";
+import { TResponseWithRedux } from "../../../../types";
 
 const studentData = {
   password: "student123",
@@ -98,7 +100,7 @@ const CreateStudent = () => {
     label: `${item?.name}`,
     value: item?._id,
   }));
-  const onsubmit: SubmitHandler<FieldValues> = (data) => {
+  const onsubmit: SubmitHandler<FieldValues> = async (data) => {
     const studentData = {
       password: "student123",
       student: data,
@@ -106,8 +108,19 @@ const CreateStudent = () => {
     // console.log(data)
     const formData = new FormData();
     formData.append("data", JSON.stringify(studentData));
-    formData.append("file" , data.image)
-    createStudent(formData);
+    formData.append("file", data.image);
+
+    const toastId = toast.loading("creating ...");
+    try {
+      const res = (await createStudent(formData)) as TResponseWithRedux<any>;
+      if (res?.error) {
+        toast.error(res?.error?.data?.message, { id: toastId });
+      } else {
+        toast.success(res?.data?.message, { id: toastId });
+      }
+    } catch (error) {
+      toast.error("something went wrong", { id: toastId });
+    }
   };
   return (
     <Row>
@@ -164,11 +177,18 @@ const CreateStudent = () => {
               ></PHinput> */}
               <Controller
                 name={"image"}
-                render={({ field: { onChange , value , ...field  }, fieldState: { error } }) => (
+                render={({
+                  field: { onChange, value, ...field },
+                  fieldState: { error },
+                }) => (
                   // <Input {...field} type={type} placeholder="Basic usage" />
                   <Form.Item label={"Picture"}>
-                    
-                    <Input value={value?.fileName} {...field}  type="file" onChange={(e)=> onChange(e.target.files![0])}></Input>
+                    <Input
+                      value={value?.fileName}
+                      {...field}
+                      type="file"
+                      onChange={(e) => onChange(e.target.files![0])}
+                    ></Input>
                     {error && <p style={{ color: "red" }}>{error?.message}</p>}
                   </Form.Item>
                 )}

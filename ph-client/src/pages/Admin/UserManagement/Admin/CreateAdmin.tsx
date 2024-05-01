@@ -6,6 +6,8 @@ import { bloodOptions, genderOptions } from "../../../../options/Options";
 import PHSelect from "../../../../component/form/PHSelect";
 import PHDatePicker from "../../../../component/form/PHDatePicker";
 import { useAddAdminMutation } from "../../../../redux/feature/admin/userManament/userManagementApi";
+import { TResponseWithRedux } from "../../../../types";
+import { toast } from "sonner";
 
 const adminValues = {
   designation: "Admin",
@@ -31,7 +33,7 @@ const CreateAdmin = () => {
   console.log(insertedData);
   console.log(error);
 
-  const onsubmit: SubmitHandler<FieldValues> = (data) => {
+  const onsubmit: SubmitHandler<FieldValues> = async(data) => {
     const facultyData = {
       password: "admin123",
       admin: data,
@@ -40,7 +42,20 @@ const CreateAdmin = () => {
     const formData = new FormData();
     formData.append("data", JSON.stringify(facultyData));
     formData.append("file", data.image);
-    createAdmin(formData);
+    
+
+    const toastId = toast.loading("creating ...");
+    try {
+        const res = (await createAdmin(formData)) as TResponseWithRedux<any>;
+        if (res?.error) {
+          toast.error(res?.error?.data?.message , {id : toastId});
+        } else {
+          toast.success(res?.data?.message , {id: toastId});
+        }
+     
+      } catch (error) {
+        toast.error("something went wrong", { id: toastId });
+      }
   };
   return (
     <Row>

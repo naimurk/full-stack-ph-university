@@ -7,6 +7,8 @@ import { bloodOptions, genderOptions } from "../../../../options/Options";
 import PHSelect from "../../../../component/form/PHSelect";
 import PHDatePicker from "../../../../component/form/PHDatePicker";
 import { useAddFacultyMutation } from "../../../../redux/feature/admin/userManament/userManagementApi";
+import { toast } from "sonner";
+import { TResponseWithRedux } from "../../../../types";
 
 const facultyValues = {
   designation: "Lecturer",
@@ -34,21 +36,29 @@ const CreateFaculty = () => {
   console.log(error);
   const { data: dData, isLoading: DIsloading } =
     useGetAllAcademicDepartmentApiQuery(undefined);
-
   const departmentOptions = dData?.data?.map((item) => ({
     label: `${item?.name}`,
     value: item?._id,
   }));
-  const onsubmit: SubmitHandler<FieldValues> = (data) => {
+  const onsubmit: SubmitHandler<FieldValues> = async (data) => {
     const facultyData = {
       password: "student123",
       faculty: data,
     };
-    // console.log(data)
     const formData = new FormData();
     formData.append("data", JSON.stringify(facultyData));
     formData.append("file", data.image);
-    createFaculty(formData);
+    const toastId = toast.loading("creating ...");
+    try {
+      const res = (await createFaculty(formData)) as TResponseWithRedux<any>;
+      if (res?.error) {
+        toast.error(res?.error?.data?.message, { id: toastId });
+      } else {
+        toast.success(res?.data?.message, { id: toastId });
+      }
+    } catch (error) {
+      toast.error("something went wrong", { id: toastId });
+    }
   };
   return (
     <Row>
