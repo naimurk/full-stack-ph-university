@@ -47,7 +47,7 @@ const CreateCourse = () => {
     }
   };
 
-  console.log(insertedData);
+  // console.log(insertedData);
 
   return (
     <Flex justify="center" align="center">
