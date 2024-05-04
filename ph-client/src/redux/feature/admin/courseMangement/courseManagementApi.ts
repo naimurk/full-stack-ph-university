@@ -1,5 +1,6 @@
 import { TResponseWithRedux } from "../../../../types";
 import { TCourse } from "../../../../types/course.type";
+import { TFacultyWithCourse } from "../../../../types/facultyWithCourse.types";
 import { TQueryParams } from "../../../../types/queryParams.type";
 import { TRegisteredSemester } from "../../../../types/registeredSemesterTypes";
 import { baseApi } from "../../../api/baseApi";
@@ -41,6 +42,19 @@ const courseManagementApi = baseApi.injectEndpoints({
       providesTags: ["course"],
     }),
 
+    getAllFacultyByCourse: builder.query({
+      query: ({ id }) => {
+        return {
+          url: `/courses/${id}/get-faculties`,
+          method: "GET",
+        };
+      },
+      transformResponse: (res: TResponseWithRedux<TFacultyWithCourse[]>) => {
+        return { data: res?.data, meta: res?.meta };
+      },
+      providesTags: ["course"],
+    }),
+
     addCourse: builder.mutation({
       query: (data) => ({
         url: "/courses/create-course",
@@ -66,11 +80,22 @@ const courseManagementApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["OfferedCourse"],
     }),
-    getOfferedCourse: builder.mutation({
-      query: () => ({
-        url: `/offered-courses`,
-        method: "GET",
-      }),
+
+    getOfferedCourse: builder.query({
+      query: (arg) => {
+        const params = new URLSearchParams();
+        arg?.forEach((element: TQueryParams) => {
+          params.append(element.name, element.value as string);
+        });
+        return {
+          url: "/offered-courses",
+          method: "GET",
+          params: params,
+        };
+      },
+      transformResponse: (res: TResponseWithRedux<TCourse[]>) => {
+        return { data: res?.data, meta: res?.meta };
+      },
       providesTags: ["OfferedCourse"],
     }),
 
@@ -100,5 +125,6 @@ export const {
   useAddCourseMutation,
   useAssignCourseToFacultyMutation,
   useAddOfferedCourseMutation,
-  useGetOfferedCourseMutation
+  useGetOfferedCourseQuery,
+  useGetAllFacultyByCourseQuery,
 } = courseManagementApi;

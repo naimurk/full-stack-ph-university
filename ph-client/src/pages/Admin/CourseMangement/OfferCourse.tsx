@@ -4,6 +4,7 @@ import { useGetAllAcademicDepartmentApiQuery } from "../../../redux/feature/admi
 import {
   useAddOfferedCourseMutation,
   useGetAllCoursesQuery,
+  useGetAllFacultyByCourseQuery,
   useGetAllRegisteredSemesterQuery,
 } from "../../../redux/feature/admin/courseMangement/courseManagementApi";
 import { toast } from "sonner";
@@ -16,8 +17,11 @@ import { weekOptions } from "../../../options/Options";
 import PHinput from "../../../component/form/PHinput";
 import PHDatePicker from "../../../component/form/PHDatePicker";
 import PHTimePicker from "../../../component/form/PHTimePicker";
+import { useState } from "react";
+import PHSelectWithWatch from "../../../component/form/PHSelectWithWatch";
 
 const OfferCourse = () => {
+  const [courseId, setCourseId] = useState("");
   const { data: registeredSemester } =
     useGetAllRegisteredSemesterQuery(undefined);
   //   const {data }
@@ -48,8 +52,24 @@ const OfferCourse = () => {
     value: `${item._id}`,
   }));
 
+  // coursesByFaculty
+  const { data: allFacultyDataByCourse } = useGetAllFacultyByCourseQuery(
+    {
+      id: courseId,
+    },
+    { skip: !courseId }
+  );
+
+  const allFacultyWithCourseOptions = allcourses?.data?.faculties?.map(
+    (item) => ({
+      label: `${item.fullName}`,
+      value: `${item._id}`,
+    })
+  );
+
   const [createOfferedCourse, { data: insertedData }] =
     useAddOfferedCourseMutation();
+
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     const toastId = toast.loading("creating ...");
     // const name = academicOptions[Number(data?.name) - 1].label;
@@ -91,10 +111,18 @@ const OfferCourse = () => {
               options={departmentOptions}
               name="academicDepartment"
             ></PHSelect>
-            <PHSelect
+            <PHSelectWithWatch
               label="Course"
               options={allcoursesOptions}
               name="course"
+              onValueChange={setCourseId}
+            ></PHSelectWithWatch>
+
+            <PHSelect
+              label="Faculty"
+              disabled={!courseId}
+              options={allFacultyWithCourseOptions}
+              name="faculty"
             ></PHSelect>
             {/* 
             <PHSelect
@@ -117,8 +145,7 @@ const OfferCourse = () => {
 
             <PHinput name="startTime" type="time" label="Start time"></PHinput>
             <PHinput name="endTime" type="time" label="Start time"></PHinput>
-    
-        
+
             <Button htmlType="submit">Submit</Button>
           </PHForm>
         </Col>
