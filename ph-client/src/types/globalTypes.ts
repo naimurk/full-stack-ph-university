@@ -1,4 +1,5 @@
 import { BaseQueryApi } from "@reduxjs/toolkit/query";
+import { TFacultyWithCourse } from "./facultyWithCourse.types";
 
 // export
 export type TError = {
@@ -10,17 +11,40 @@ export type TError = {
   status: number;
 };
 
-export type TResponse <T> = {
+export type TFacultyWithCourses = {
+  data: {
+    faculties: TFacultyWithCourse[];
+  };
+};
+
+export type TResponse<T> = {
   data?: T;
   error?: TError;
-  meta ?: {
+  meta?: {
     limit: number;
     page: number;
     total: number;
     totalPage: number;
   };
- status?: boolean;
- message?: string;
+  status?: boolean;
+  message?: string;
 };
 
- export type TResponseWithRedux<T> = BaseQueryApi & TResponse<T>
+export type TResponseWithRedux<T> = BaseQueryApi & TResponse<T>;
+
+export type TResponseAnother<T> = {
+  data?: {
+    faculties: T;
+  };
+  error?: TError;
+  meta?: {
+    limit: number;
+    page: number;
+    total: number;
+    totalPage: number;
+  };
+  status?: boolean;
+  message?: string;
+};
+
+export type TResponseWithReduxAnother<T> = BaseQueryApi & TResponseAnother<T>;

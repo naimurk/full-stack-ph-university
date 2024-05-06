@@ -1,4 +1,7 @@
-import { TResponseWithRedux } from "../../../../types";
+import {
+  TResponseWithRedux,
+  TResponseWithReduxAnother,
+} from "../../../../types";
 import { TCourse } from "../../../../types/course.type";
 import { TFacultyWithCourse } from "../../../../types/facultyWithCourse.types";
 import { TQueryParams } from "../../../../types/queryParams.type";
@@ -49,7 +52,10 @@ const courseManagementApi = baseApi.injectEndpoints({
           method: "GET",
         };
       },
-      transformResponse: (res: TResponseWithRedux<TFacultyWithCourse[]>) => {
+      transformResponse: (
+        res: TResponseWithReduxAnother<TFacultyWithCourse[]>
+      ) => {
+        console.log(res);
         return { data: res?.data, meta: res?.meta };
       },
       providesTags: ["course"],

@@ -4,7 +4,7 @@ import MainLayout from "./component/Layout/MainLayout";
 const App = () => {
   return (
     <div>
-      <ProtectedRoutes>
+      <ProtectedRoutes role={undefined}>
         <MainLayout></MainLayout>
       </ProtectedRoutes>
     </div>

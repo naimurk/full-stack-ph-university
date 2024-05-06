@@ -59,8 +59,8 @@ const OfferCourse = () => {
     },
     { skip: !courseId }
   );
-
-  const allFacultyWithCourseOptions = allcourses?.data?.faculties?.map(
+ console.log(allFacultyDataByCourse)
+  const allFacultyWithCourseOptions = allFacultyDataByCourse?.data?.faculties?.map(
     (item) => ({
       label: `${item.fullName}`,
       value: `${item._id}`,
@@ -75,21 +75,23 @@ const OfferCourse = () => {
     // const name = academicOptions[Number(data?.name) - 1].label;
     const formData = {
       ...data,
+      section: Number(data.section),
+      maxCapacity: Number(data?.maxCapacity)
     };
-    console.log(formData);
+    // console.log(formData);
 
-    // try {
-    //   const res = (await createOfferedCourse(
-    //     formData
-    //   )) as TResponseWithRedux<any>;
-    //   if (res?.error) {
-    //     toast.error(res?.error?.data?.message, { id: toastId });
-    //   } else {
-    //     toast.success(res?.data?.message, { id: toastId });
-    //   }
-    // } catch (error) {
-    //   toast.error("something went wrong", { id: toastId });
-    // }
+    try {
+      const res = (await createOfferedCourse(
+        formData
+      )) as TResponseWithRedux<any>;
+      if (res?.error) {
+        toast.error(res?.error?.data?.message, { id: toastId });
+      } else {
+        toast.success(res?.data?.message, { id: toastId });
+      }
+    } catch (error) {
+      toast.error("something went wrong", { id: toastId });
+    }
   };
   return (
     <>

@@ -12,7 +12,7 @@ import { ReactNode } from "react";
   } | undefined;
   
    export type TRoutesData = {
-    name: string;
+    name?: string;
     path?: string;
     element?: ReactNode;
     children?: TRoutesData[];
