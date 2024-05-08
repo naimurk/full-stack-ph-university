@@ -44,8 +44,8 @@ const Login = () => {
     // console.log(formData);
   };
   const defaultValues = {
-    id: "2025030001",
-    password: "student123",
+    id: "2022010001",
+    password: "12345678",
   };
   return (
     <div>
