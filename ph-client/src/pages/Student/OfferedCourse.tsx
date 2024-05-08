@@ -45,7 +45,7 @@ const OfferedCourse = () => {
                       <p>
                         Days: 
                         {section?.days?.map((day) => (
-                          <span>{day}</span>
+                          <span style={{margin: "2px"}}>{day}</span>
                         ))}
                       </p>
                     </Col>
