@@ -10,8 +10,9 @@ import { useAppDispatch } from "../../../redux/hook";
 import { logout } from "../../../redux/feature/auth/authSlice";
 
 const ChangesPassword = () => {
-    const navigate = useNavigate();
-    const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
   const [changePassword, { isError, error }] = useChangedPasswordMutation();
   const onSubmit = async (formData: FieldValues) => {
     toast.loading("loading...", { id: 1 });
@@ -19,17 +20,15 @@ const ChangesPassword = () => {
     const res = (await changePassword(formData)) as TResponse<any>;
     console.log(res);
     if (res?.error?.data?.message && res?.error) {
-    //   console.log(res?.error?.data?.message);
+      //   console.log(res?.error?.data?.message);
       toast.loading(res?.error?.data?.message, { id: 1 });
-    }
-    else {
-        dispatch(logout())
-        navigate("/login");
+    } else {
+      dispatch(logout());
+      navigate("/login");
     }
 
     // console.log(formData);
   };
-
   return (
     <div>
       <h2 style={{ textAlign: "center" }}>Change Password</h2>
