@@ -1,11 +1,12 @@
-import { object } from "zod";
 import { useGetStudentOfferedCourseQuery } from "../../redux/feature/student/studentCourseManagementApi";
 import { Button, Col, Row } from "antd";
-
+type TAC = {
+  [index: string]: any;
+};
 const OfferedCourse = () => {
   const { data: studentOfferedCourses } =
     useGetStudentOfferedCourseQuery(undefined);
-  const singleObject = studentOfferedCourses?.data?.reduce((acc, item) => {
+  const singleObject = studentOfferedCourses?.data?.reduce((acc: TAC, item) => {
     const key = item?.course?.title;
     acc[key] = acc[key] || { courseTitle: key, sections: [] };
     acc[key].sections.push({
@@ -17,21 +18,36 @@ const OfferedCourse = () => {
     });
     return acc;
   }, {});
-  const modifiedData = Object.values(singleObject ? singleObject : {});
+  type TSections = {
+    section: string;
+    _id: string;
+    startTime: string;
+    endTime: string;
+    days: string[];
+  };
+  type TModifiedData = { courseTitle: string; sections: TSections[] };
+  const modifiedData = Object.values(
+    singleObject ? singleObject : []
+  ) as TModifiedData[];
   console.log(modifiedData);
+
   // console.log(Object.values(singleObject));
   return (
     <Row gutter={[0, 10]}>
       {modifiedData?.map((item) => {
         return (
-          <Col style={{border: "solid #d4d4d4" , padding: "5px"}} span={24}>
-            <div style={{padding: "10px"}}>
+          <Col style={{ border: "solid #d4d4d4", padding: "5px" }} span={24}>
+            <div style={{ padding: "10px" }}>
               <h1>{item?.courseTitle}</h1>
             </div>
             <div>
               {item.sections?.map((section) => {
                 return (
-                  <Row justify={'space-between'} align={"middle"} style={{borderTop: "solid #d4d4d4" , padding : "10px"}}>
+                  <Row
+                    justify={"space-between"}
+                    align={"middle"}
+                    style={{ borderTop: "solid #d4d4d4", padding: "10px" }}
+                  >
                     <Col span={4}>
                       <p>Section : {section?.section}</p>
                     </Col>
@@ -39,13 +55,13 @@ const OfferedCourse = () => {
                       <p>Start Time : {section?.startTime}</p>
                     </Col>
                     <Col span={4}>
-                      <p>End Time:  {section?.endTime}</p>
+                      <p>End Time: {section?.endTime}</p>
                     </Col>
                     <Col span={4}>
                       <p>
-                        Days: 
+                        Days:
                         {section?.days?.map((day) => (
-                          <span style={{margin: "2px"}}>{day}</span>
+                          <span style={{ margin: "2px" }}>{day}</span>
                         ))}
                       </p>
                     </Col>
