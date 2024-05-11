@@ -1,7 +1,13 @@
 import { useParams } from "react-router-dom";
-import { useGetEnrolledFacultyInCourseQuery } from "../../redux/feature/faculty/myFacultyCourse.api";
-import { Button, Table } from "antd";
-
+import {
+  useGetEnrolledFacultyInCourseQuery,
+  useUpdateStudentMarkMutation,
+} from "../../redux/feature/faculty/myFacultyCourse.api";
+import { Button, Modal, Table } from "antd";
+import PHForm from "../../component/form/PHForm";
+import PHinput from "../../component/form/PHinput";
+import { FieldValues, SubmitHandler } from "react-hook-form";
+import { useState } from "react";
 
 const MyStudent = () => {
   // semesterRegisteredId/:courseId
@@ -14,15 +20,15 @@ const MyStudent = () => {
       { name: "course", value: courseId },
     ]);
   // console.log(data);
-  const data = EnrolledFacultyCourseData?.data?.map(
-    ({ _id, student }) => ({
-      key: _id,
-      name: student.fullName,
-      roll: student.id
+  const data = EnrolledFacultyCourseData?.data?.map(({ _id, student , semesterRegistration , offeredCourse }) => ({
+    key: _id,
+    name: student.fullName,
+    roll: student.id,
+    semesterRegistration: semesterRegistration?._id,
+    offeredCourse: offeredCourse._id,
+    student: student._id 
 
-
-    })
-  );
+  }));
   // console.log(params);
 
   const columns = [
@@ -39,12 +45,9 @@ const MyStudent = () => {
     {
       key: "x",
       title: "Action",
-      render: () => {
-        return (
-          <div>
-            <Button>Update</Button>
-          </div>
-        );
+      render: (item) => {
+        // console.log(item)
+        return <AddMarksModal studentInfo={item}></AddMarksModal>;
       },
     },
   ];
@@ -60,3 +63,63 @@ const MyStudent = () => {
 };
 
 export default MyStudent;
+const AddMarksModal = ({ studentInfo }) => {
+  console.log(studentInfo)
+  const [updateStundetMarks] = useUpdateStudentMarkMutation();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+  const handleSubmit: SubmitHandler<FieldValues> = (data) => {
+    const courseMarks = {
+      classTest1: data?.classTest1,
+      midTerm: data?.midTerm,
+      classTest2: data?.classTest2,
+      finalTerm: data?.finalTerm,
+    };
+    const boydData = {
+      semesterRegistration: "65b6185f13c0a33cdf61589a",
+      offeredCourse: "65b66f2a8cbfc00b54ba4ee2",
+      student: "65b016db47c500c09d0bed2f",
+      courseMarks,
+    };
+    console.log(boydData);
+  };
+
+  return (
+    <>
+      <Button onClick={showModal}>Assign Faculty</Button>
+      <Modal
+        title="Assign Faculty"
+        open={isModalOpen}
+        onOk={handleOk}
+        onCancel={handleCancel}
+        footer={null}
+      >
+        <PHForm onSubmit={handleSubmit}>
+          <PHinput
+            label="Class test 1"
+            name="classTest1"
+            type="number"
+          ></PHinput>
+          <PHinput
+            label="Class test 2"
+            name="classTest2"
+            type="number"
+          ></PHinput>
+          <PHinput label="Midterm" name="midTerm" type="number"></PHinput>
+          <PHinput label="Finalterm" name="finalTerm" type="number"></PHinput>
+          <Button htmlType="submit">Submit</Button>
+        </PHForm>
+      </Modal>
+    </>
+  );
+};

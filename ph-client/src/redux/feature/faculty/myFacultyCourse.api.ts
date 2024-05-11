@@ -17,12 +17,26 @@ const myFacultyCourseApi = baseApi.injectEndpoints({
           params: params,
         };
       },
-      transformResponse: (res: TResponseWithRedux<TMyFacultyEnrolledCourse[]>) => {
+      transformResponse: (
+        res: TResponseWithRedux<TMyFacultyEnrolledCourse[]>
+      ) => {
         return { data: res?.data, meta: res?.meta };
       },
       providesTags: ["semester-registrations"],
     }),
+    updateStudentMark: builder.mutation({
+      query: (data) => {
+        return {
+          url: "/enrolled-courses/update-enrolled-course-marks",
+          method: "POST",
+          params: data,
+        };
+      },
+    }),
   }),
 });
 
-export const { useGetEnrolledFacultyInCourseQuery} = myFacultyCourseApi;
+export const {
+  useGetEnrolledFacultyInCourseQuery,
+  useUpdateStudentMarkMutation,
+} = myFacultyCourseApi;
