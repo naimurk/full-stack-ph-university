@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { json, useParams } from "react-router-dom";
 import {
   useGetEnrolledFacultyInCourseQuery,
   useUpdateStudentMarkMutation,
@@ -20,15 +20,16 @@ const MyStudent = () => {
       { name: "course", value: courseId },
     ]);
   // console.log(data);
-  const data = EnrolledFacultyCourseData?.data?.map(({ _id, student , semesterRegistration , offeredCourse }) => ({
-    key: _id,
-    name: student.fullName,
-    roll: student.id,
-    semesterRegistration: semesterRegistration?._id,
-    offeredCourse: offeredCourse._id,
-    student: student._id 
-
-  }));
+  const data = EnrolledFacultyCourseData?.data?.map(
+    ({ _id, student, semesterRegistration, offeredCourse }) => ({
+      key: _id,
+      name: student.fullName,
+      roll: student.id,
+      semesterRegistration: semesterRegistration?._id,
+      offeredCourse: offeredCourse._id,
+      student: student._id,
+    })
+  );
   // console.log(params);
 
   const columns = [
@@ -64,8 +65,8 @@ const MyStudent = () => {
 
 export default MyStudent;
 const AddMarksModal = ({ studentInfo }) => {
-  console.log(studentInfo)
-  const [updateStundetMarks] = useUpdateStudentMarkMutation();
+  // console.log(studentInfo);
+  const [updateStudentMarks] = useUpdateStudentMarkMutation();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const showModal = () => {
     setIsModalOpen(true);
@@ -78,20 +79,22 @@ const AddMarksModal = ({ studentInfo }) => {
   const handleCancel = () => {
     setIsModalOpen(false);
   };
-  const handleSubmit: SubmitHandler<FieldValues> = (data) => {
-    const courseMarks = {
-      classTest1: data?.classTest1,
-      midTerm: data?.midTerm,
-      classTest2: data?.classTest2,
-      finalTerm: data?.finalTerm,
+  const handleSubmit: SubmitHandler<FieldValues> = async (data) => {
+    const studentMarks = {
+      semesterRegistration: studentInfo.semesterRegistration,
+      offeredCourse: studentInfo.offeredCourse,
+      student: studentInfo.student,
+      courseMarks: {
+        classTest1: Number(data?.classTest1),
+        midTerm: Number(data?.midTerm),
+        classTest2: Number(data?.classTest2),
+        finalTerm: Number(data?.finalTerm),
+      },
     };
-    const boydData = {
-      semesterRegistration: "65b6185f13c0a33cdf61589a",
-      offeredCourse: "65b66f2a8cbfc00b54ba4ee2",
-      student: "65b016db47c500c09d0bed2f",
-      courseMarks,
-    };
-    console.log(boydData);
+    // console.log(boydData);
+    // console.log(boydData);
+    const res = await updateStudentMarks(studentMarks);
+    // console.log(res);
   };
 
   return (

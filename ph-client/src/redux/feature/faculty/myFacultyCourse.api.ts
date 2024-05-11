@@ -28,8 +28,8 @@ const myFacultyCourseApi = baseApi.injectEndpoints({
       query: (data) => {
         return {
           url: "/enrolled-courses/update-enrolled-course-marks",
-          method: "POST",
-          params: data,
+          method: "PATCH",
+          body: data,
         };
       },
     }),
