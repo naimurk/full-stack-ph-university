@@ -32,7 +32,7 @@ const myFacultyCourseApi = baseApi.injectEndpoints({
           body: data,
         };
       },
-    }),
+    })
   }),
 });
 
