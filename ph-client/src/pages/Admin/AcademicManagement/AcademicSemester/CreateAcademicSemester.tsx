@@ -7,13 +7,15 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { academicSemesterSchema } from "./AcademinSemsterSchema";
 import { useAddAcademicSemesterMutation } from "../../../../redux/feature/admin/AcademicSemester/academicSemesterApi";
 import { toast } from "sonner";
-import { TAcademicSemester,  TResponseWithRedux } from "../../../../types";
+import {  TResponseWithRedux } from "../../../../types";
+
+
 
 const CreateAcademicSemester = () => {
   const [addAcademicSemester] = useAddAcademicSemesterMutation();
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     // console.log(data);
-    
+
     const toastId = toast.loading("creating ...");
     const name = academicOptions[Number(data?.name) - 1].label;
     const formData = {
@@ -25,13 +27,14 @@ const CreateAcademicSemester = () => {
     };
 
     try {
-      const res = (await addAcademicSemester(formData)) as TResponseWithRedux<TAcademicSemester>;
+      const res = (await addAcademicSemester(
+        formData
+      )) as TResponseWithRedux<any>;
       if (res?.error) {
-        toast.error(res?.error?.data?.message , {id : toastId});
+        toast.error(res?.error?.data?.message, { id: toastId });
       } else {
-        toast.success(res?.data?.message , {id: toastId});
+        toast.success(res?.data?.message, { id: toastId });
       }
-   
     } catch (error) {
       toast.error("something went wrong", { id: toastId });
     }

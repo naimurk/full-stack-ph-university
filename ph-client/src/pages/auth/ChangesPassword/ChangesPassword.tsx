@@ -13,7 +13,7 @@ const ChangesPassword = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const [changePassword, { isError, error }] = useChangedPasswordMutation();
+  const [changePassword, ] = useChangedPasswordMutation();
   const onSubmit = async (formData: FieldValues) => {
     toast.loading("loading...", { id: 1 });
 

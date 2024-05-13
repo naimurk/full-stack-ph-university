@@ -12,7 +12,7 @@ import PHSelect from "../../../component/form/PHSelect";
 import { TPreRequisiteCourse } from "../../../types/course.type";
 
 const CreateCourse = () => {
-  const [createCourse, { data: insertedData }] = useAddCourseMutation();
+  const [createCourse] = useAddCourseMutation();
   const { data: coursesData } = useGetAllCoursesQuery(undefined);
   const courseOptions = coursesData?.data?.map((item) => ({
     label: item?.title,

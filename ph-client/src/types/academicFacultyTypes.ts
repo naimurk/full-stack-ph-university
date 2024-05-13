@@ -3,7 +3,7 @@
 export interface TAcademicFaculty {
   success: boolean
   message: string
-  data: Data
+  data: TAcaFacultyData
 }
 
 export interface TAcaFacultyData {

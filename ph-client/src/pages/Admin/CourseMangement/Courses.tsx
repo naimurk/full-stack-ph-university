@@ -16,7 +16,7 @@ import { FieldValues, SubmitHandler } from "react-hook-form";
 
 export type TTablData = Pick<TCourse, "title" | "code">;
 const Courses = () => {
-  const [params, setParams] = useState<TQueryParams[]>([]);
+  const [params] = useState<TQueryParams[]>([]);
   const [page, setpage] = useState(1);
 
   const {
