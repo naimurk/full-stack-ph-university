@@ -6,7 +6,7 @@ export interface TAcademicFaculty {
   data: Data
 }
 
-export interface Data {
+export interface TAcaFacultyData {
   name: string
   _id: string
   createdAt: string

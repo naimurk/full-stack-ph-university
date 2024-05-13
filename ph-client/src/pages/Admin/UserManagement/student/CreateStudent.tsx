@@ -7,80 +7,79 @@ import { useGetAllAcademicSemesterQuery } from "../../../../redux/feature/admin/
 import { bloodOptions, genderOptions } from "../../../../options/Options";
 import PHSelect from "../../../../component/form/PHSelect";
 import PHDatePicker from "../../../../component/form/PHDatePicker";
-import { TOptions } from "../../../../types/optionsTypes";
-import { json } from "react-router-dom";
+
 import { useAddStudentMutation } from "../../../../redux/feature/admin/userManament/userManagementApi";
 import { toast } from "sonner";
 import { TResponseWithRedux } from "../../../../types";
 
-const studentData = {
-  password: "student123",
-  student: {
-    name: {
-      firstName: "I am ",
-      middleName: "Student",
-      lastName: "Number 1",
-    },
-    gender: "male",
-    dateOfBirth: "1990-01-01",
+// const studentData = {
+//   password: "student123",
+//   student: {
+//     name: {
+//       firstName: "I am ",
+//       middleName: "Student",
+//       lastName: "Number 1",
+//     },
+//     gender: "male",
+//     dateOfBirth: "1990-01-01",
 
-    email: "studffsent9ff92@gmail.com",
-    contactNo: "1235678",
-    emergencyContactNo: "987-654-3210",
-    bloogGroup: "A+",
-    presentAddress: "123 Main St, Cityville",
-    permanentAddress: "456 Oak St, Townsville",
-    guardian: {
-      fatherName: "James Doe",
-      fatherOccupation: "Engineer",
-      fatherContactNo: "111-222-3333",
-      motherName: "Mary Doe",
-      motherOccupation: "Teacher",
-      motherContactNo: "444-555-6666",
-    },
-    localGuardian: {
-      name: "Alice Johnson",
-      occupation: "Doctor",
-      contactNo: "777-888-9999",
-      address: "789 Pine St, Villageton",
-    },
-    admissionSemester: "6603e75f01476003defc1c44",
-    academicDepartment: "6607b6163f46619212f466b4",
-  },
-};
+//     email: "studffsent9ff92@gmail.com",
+//     contactNo: "1235678",
+//     emergencyContactNo: "987-654-3210",
+//     bloogGroup: "A+",
+//     presentAddress: "123 Main St, Cityville",
+//     permanentAddress: "456 Oak St, Townsville",
+//     guardian: {
+//       fatherName: "James Doe",
+//       fatherOccupation: "Engineer",
+//       fatherContactNo: "111-222-3333",
+//       motherName: "Mary Doe",
+//       motherOccupation: "Teacher",
+//       motherContactNo: "444-555-6666",
+//     },
+//     localGuardian: {
+//       name: "Alice Johnson",
+//       occupation: "Doctor",
+//       contactNo: "777-888-9999",
+//       address: "789 Pine St, Villageton",
+//     },
+//     admissionSemester: "6603e75f01476003defc1c44",
+//     academicDepartment: "6607b6163f46619212f466b4",
+//   },
+// };
 
-const studentDefaultValues = {
-  name: {
-    firstName: "I am ",
-    middleName: "Student",
-    lastName: "Number 1",
-  },
-  gender: "male",
-  dateOfBirth: "1990-01-01",
+// const studentDefaultValues = {
+//   name: {
+//     firstName: "I am ",
+//     middleName: "Student",
+//     lastName: "Number 1",
+//   },
+//   gender: "male",
+//   dateOfBirth: "1990-01-01",
 
-  email: "studffsent9ff92@gmail.com",
-  contactNo: "1235678",
-  emergencyContactNo: "987-654-3210",
-  bloogGroup: "A+",
-  presentAddress: "123 Main St, Cityville",
-  permanentAddress: "456 Oak St, Townsville",
-  guardian: {
-    fatherName: "James Doe",
-    fatherOccupation: "Engineer",
-    fatherContactNo: "111-222-3333",
-    motherName: "Mary Doe",
-    motherOccupation: "Teacher",
-    motherContactNo: "444-555-6666",
-  },
-  localGuardian: {
-    name: "Alice Johnson",
-    occupation: "Doctor",
-    contactNo: "777-888-9999",
-    address: "789 Pine St, Villageton",
-  },
-  // admissionSemester: "6603e75f01476003defc1c44",
-  // academicDepartment: "6607b6163f46619212f466b4",
-};
+//   email: "studffsent9ff92@gmail.com",
+//   contactNo: "1235678",
+//   emergencyContactNo: "987-654-3210",
+//   bloogGroup: "A+",
+//   presentAddress: "123 Main St, Cityville",
+//   permanentAddress: "456 Oak St, Townsville",
+//   guardian: {
+//     fatherName: "James Doe",
+//     fatherOccupation: "Engineer",
+//     fatherContactNo: "111-222-3333",
+//     motherName: "Mary Doe",
+//     motherOccupation: "Teacher",
+//     motherContactNo: "444-555-6666",
+//   },
+//   localGuardian: {
+//     name: "Alice Johnson",
+//     occupation: "Doctor",
+//     contactNo: "777-888-9999",
+//     address: "789 Pine St, Villageton",
+//   },
+//   // admissionSemester: "6603e75f01476003defc1c44",
+//   // academicDepartment: "6607b6163f46619212f466b4",
+// };
 
 const CreateStudent = () => {
   const [createStudent, { data: insertedData, error }] =

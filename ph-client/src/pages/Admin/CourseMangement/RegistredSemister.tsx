@@ -1,5 +1,5 @@
 import { Button, Dropdown, Table } from "antd";
-import type { MenuProps, TableColumnsType, TableProps } from "antd";
+import type { MenuProps, TableColumnsType } from "antd";
 
 import { useState } from "react";
 import { TQueryParams } from "../../../types/queryParams.type";
@@ -9,7 +9,6 @@ import {
 } from "../../../redux/feature/admin/courseMangement/courseManagementApi";
 import { TRegisteredSemester } from "../../../types/registeredSemesterTypes";
 import moment from "moment";
-import { set } from "react-hook-form";
 
 export type TTablData = Pick<
   TRegisteredSemester,
@@ -22,8 +21,8 @@ export type TTablData = Pick<
 >;
 const RegistredSemister = () => {
   const [registeredId, setRegisteredId] = useState("");
-  const [params, setParams] = useState<TQueryParams[] | undefined>(undefined);
-  const [updateRegistration, { data: updatedData }] =
+  const [params] = useState<TQueryParams[] | undefined>(undefined);
+  const [updateRegistration] =
     useUpdateSemesterRegistrationMutation();
   const {
     data: registeredSemisterData,

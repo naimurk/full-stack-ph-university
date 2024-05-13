@@ -1,7 +1,7 @@
 import { Button, Table, TableColumnsType, TableProps } from "antd";
 import { useGetAllFacultyQuery } from "../../../../redux/feature/admin/AcademicFaculty/academicFacultyApi";
-import { TAcademicFaculty } from "../../../../types/academicFacultyTypes";
-export type TTablData = Pick<TAcademicFaculty, "name">;
+import { TAcaFacultyData } from "../../../../types/academicFacultyTypes";
+export type TTablData = Pick<TAcaFacultyData, "name">;
 const AcademicFaulty = () => {
   const {
     data: facultyData,

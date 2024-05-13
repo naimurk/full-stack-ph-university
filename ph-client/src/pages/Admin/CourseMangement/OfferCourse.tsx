@@ -8,15 +8,12 @@ import {
   useGetAllRegisteredSemesterQuery,
 } from "../../../redux/feature/admin/courseMangement/courseManagementApi";
 import { toast } from "sonner";
-import { TPreRequisiteCourse } from "../../../types/course.type";
 import { TResponseWithRedux } from "../../../types";
 import { Button, Col, Flex } from "antd";
 import PHForm from "../../../component/form/PHForm";
 import PHSelect from "../../../component/form/PHSelect";
 import { weekOptions } from "../../../options/Options";
 import PHinput from "../../../component/form/PHinput";
-import PHDatePicker from "../../../component/form/PHDatePicker";
-import PHTimePicker from "../../../component/form/PHTimePicker";
 import { useState } from "react";
 import PHSelectWithWatch from "../../../component/form/PHSelectWithWatch";
 
@@ -37,8 +34,6 @@ const OfferCourse = () => {
   }));
   const {
     data: facultyData,
-    isFetching,
-    isLoading,
   } = useGetAllFacultyQuery(undefined);
 
   const facultyOptions = facultyData?.data?.map((item) => ({
@@ -67,7 +62,7 @@ const OfferCourse = () => {
     })
   );
 
-  const [createOfferedCourse, { data: insertedData }] =
+  const [createOfferedCourse] =
     useAddOfferedCourseMutation();
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
