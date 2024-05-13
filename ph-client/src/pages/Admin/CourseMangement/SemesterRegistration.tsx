@@ -2,7 +2,6 @@ import { FieldValues, SubmitHandler } from "react-hook-form";
 
 import { Button, Col, Flex } from "antd";
 
-import { zodResolver } from "@hookform/resolvers/zod";
 
 import { toast } from "sonner";
 
@@ -18,7 +17,7 @@ import { TResponseWithRedux } from "../../../types";
 const SemesterRegistration = () => {
   const { data: allAcademicSemesterData } =
     useGetAllAcademicSemesterQuery(undefined);
-  const [createSemesterRegistration, { data: data }] =
+  const [createSemesterRegistration] =
     useAddSemesterRegistrationMutation();
   const academicSemesterOptions = allAcademicSemesterData?.data?.map(
     (item) => ({

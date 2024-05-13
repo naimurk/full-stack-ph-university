@@ -1,4 +1,4 @@
-import { json, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import {
   useGetEnrolledFacultyInCourseQuery,
   useUpdateStudentMarkMutation,
@@ -8,6 +8,7 @@ import PHForm from "../../component/form/PHForm";
 import PHinput from "../../component/form/PHinput";
 import { FieldValues, SubmitHandler } from "react-hook-form";
 import { useState } from "react";
+import { TMyFacultyEnrolledCourse } from "../../types/myFacultyEnrolledCourse.type";
 
 const MyStudent = () => {
   // semesterRegisteredId/:courseId
@@ -46,7 +47,7 @@ const MyStudent = () => {
     {
       key: "x",
       title: "Action",
-      render: (item) => {
+      render: (item: TMyFacultyEnrolledCourse) => {
         // console.log(item)
         return <AddMarksModal studentInfo={item}></AddMarksModal>;
       },
@@ -64,7 +65,11 @@ const MyStudent = () => {
 };
 
 export default MyStudent;
-const AddMarksModal = ({ studentInfo }) => {
+const AddMarksModal = ({
+  studentInfo,
+}: {
+  studentInfo: TMyFacultyEnrolledCourse;
+}) => {
   // console.log(studentInfo);
   const [updateStudentMarks] = useUpdateStudentMarkMutation();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -94,7 +99,7 @@ const AddMarksModal = ({ studentInfo }) => {
     // console.log(boydData);
     // console.log(boydData);
     const res = await updateStudentMarks(studentMarks);
-    // console.log(res);
+    console.log(res);
   };
 
   return (
