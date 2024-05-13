@@ -15,6 +15,7 @@ const CreateAcademicFaculty = () => {
     const toastId = toast.loading("creating ...");
     try {
         const res = (await addAcademicFaculty(data)) as TResponseWithRedux<TAcademicFaculty>;
+        console.log(res)
         if (res?.error) {
           toast.error(res?.error?.data?.message , {id : toastId});
         } else {

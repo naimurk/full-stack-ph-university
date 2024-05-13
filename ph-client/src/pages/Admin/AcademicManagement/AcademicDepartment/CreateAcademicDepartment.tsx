@@ -3,7 +3,7 @@ import PHForm from "../../../../component/form/PHForm";
 import { zodResolver } from "@hookform/resolvers/zod";
 import PHinput from "../../../../component/form/PHinput";
 import { FieldValues, SubmitHandler } from "react-hook-form";
-import { TResponse, TResponseWithRedux } from "../../../../types";
+import { TResponse } from "../../../../types";
 import { TAcademicDepartment } from "../../../../types/academicDepartmentTypes";
 import { toast } from "sonner";
 import { useGetAllFacultyQuery } from "../../../../redux/feature/admin/AcademicFaculty/academicFacultyApi";

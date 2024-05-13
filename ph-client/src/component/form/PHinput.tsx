@@ -1,5 +1,5 @@
 import { Form, Input } from "antd";
-import { Controller, useFormContext } from "react-hook-form";
+import { Controller } from "react-hook-form";
 
 const PHinput = ({
   name,
@@ -10,7 +10,6 @@ const PHinput = ({
   type: string;
   label: string;
 }) => {
-  const { register } = useFormContext();
 
   return (
     <div>

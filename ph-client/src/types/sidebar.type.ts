@@ -9,8 +9,14 @@ import { ReactNode } from "react";
     key: string;
     label: ReactNode;
     children?: TSidebarItems[];
-  } | undefined;
+  } | undefined ;
   
+  export type TSidebarItemsAnother = {
+    key: string;
+    label: ReactNode;
+    children?: TSidebarItems[];
+  } ;
+
    export type TRoutesData = {
     name?: string;
     path?: string;

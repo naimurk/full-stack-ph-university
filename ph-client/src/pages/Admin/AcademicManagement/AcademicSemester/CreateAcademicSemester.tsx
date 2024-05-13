@@ -7,7 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { academicSemesterSchema } from "./AcademinSemsterSchema";
 import { useAddAcademicSemesterMutation } from "../../../../redux/feature/admin/AcademicSemester/academicSemesterApi";
 import { toast } from "sonner";
-import { TAcademicSemester, TResponse, TResponseWithRedux } from "../../../../types";
+import { TAcademicSemester,  TResponseWithRedux } from "../../../../types";
 
 const CreateAcademicSemester = () => {
   const [addAcademicSemester] = useAddAcademicSemesterMutation();
