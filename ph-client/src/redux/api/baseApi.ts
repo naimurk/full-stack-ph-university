@@ -20,7 +20,7 @@ type ErrorResponse = {
 };
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: "http://localhost:5000/api/v1",
+  baseUrl: `${import.meta.env.VITE_BACKEND_URL}/api/v1`,
   credentials: "include",
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState).auth.token;
